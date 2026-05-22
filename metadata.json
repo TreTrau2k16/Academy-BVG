@@ -1,0 +1,6 @@
+{
+  "name": "Bách Việt Academy",
+  "description": "Nền tảng đào tạo hội nhập và kiểm tra kiến thức sau đào tạo gamified dành cho nhân sự mới Công ty Xây dựng Bách Việt.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
