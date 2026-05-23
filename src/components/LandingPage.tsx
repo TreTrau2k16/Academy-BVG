@@ -674,49 +674,7 @@ export default function LandingPage({ onStartOnboarding, onLoginSuccess, onQuick
         </AnimatePresence>
       </main>
 
-      {/* FOOTER (Simple, sleek, slate colors) */}
-      <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 shrink-0 text-center sm:text-left">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          <div>
-            <span className="font-extrabold text-white text-lg tracking-tight">BÁCH VIỆT <span className="text-orange-400">ACADEMY</span></span>
-            <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-              Tổng công ty Cổ phần Xây dựng Bách Việt.<br />
-              Kiến tạo giá trị thực bằng sự chính trực nghề nghiệp, chất lượng đỉnh cao và công nghệ đột phá.
-            </p>
-          </div>
-          <div>
-            <h4 className="text-white font-bold text-sm mb-3">Về Bách Việt</h4>
-            <ul className="text-xs space-y-2">
-              <li><span className="hover:text-white transition-colors cursor-pointer">Lịch sử doanh nghiệp</span></li>
-              <li><span className="hover:text-white transition-colors cursor-pointer">Tổ chức bộ máy lãnh đạo</span></li>
-              <li><span className="hover:text-white transition-colors cursor-pointer">Dự án công trình tiêu biểu</span></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-bold text-sm mb-3">Công Nghệ & Kỹ Thuật</h4>
-            <ul className="text-xs space-y-2">
-              <li><span className="hover:text-white transition-colors cursor-pointer">Chuyển đổi số BIM 5D</span></li>
-              <li><span className="hover:text-white transition-colors cursor-pointer">Tiêu chuẩn Xây Dựng Xanh</span></li>
-              <li><span className="hover:text-white transition-colors cursor-pointer">Công nghệ Bê tông dự ứng lực</span></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-bold text-sm mb-3">Liên Hệ Ban Nhân Sự</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Trụ sở chính: Tòa nhà Bách Việt Tower, Khu biệt thự đảo Kim Cương, TP. Thủ Đức, TP. Hồ Chí Minh.<br />
-              Email hỗ trợ kỹ thuật: support@bachvietcon.com.vn
-            </p>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 mt-8 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-slate-500">&copy; {new Date().getFullYear()} Công ty Cổ phần Xây dựng Bách Việt. Bảo lưu mọi quyền.</p>
-          <div className="flex gap-4 text-xs">
-            <span className="hover:text-white transition-colors cursor-pointer">Quy chế nội bộ</span>
-            <span>&bull;</span>
-            <span className="hover:text-white transition-colors cursor-pointer">Chính sách bảo mật lực lượng lao động</span>
-          </div>
-        </div>
-      </footer>
+
 
     </div>
   );

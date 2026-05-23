@@ -842,10 +842,53 @@ Thành lập với khát khao định rõ chuẩn mực xây dựng mới, Bách
   const handleDeletePairLine = (pairIdx: number) => {
     setSelectedQuestionPairs(prev => prev.filter((_, i) => i !== pairIdx));
   };
+     // SYSTEM MECHANICS SAVER
+  const handleSaveOperationalSettings = () => {
+    if (!courses) return;
 
+    const updatedSettings = {
+      heartsLimit: Number(settingHeartsLimit),
+      xpBonusReadingHandbook: Number(settingXpBonusReadingHandbook),
+      autoApproveCertificate: !!settingAutoApproveCertificate,
+      strictEvaluation: !!settingStrictEvaluation,
+      dailyGoalEasyXp: Number(settingDailyGoalEasyXp),
+      dailyGoalNormalXp: Number(settingDailyGoalNormalXp),
+      dailyGoalHardXp: Number(settingDailyGoalHardXp),
+      enableStreakMultiplier: !!settingEnableStreakMultiplier,
+      customAppSubtitle: settingCustomSubtitle
+    };
 
-  // SYSTEM MECHANICS SAVER
-  const handleSaveOperati  return (
+    const payload = {
+      ...courses,
+      settings: updatedSettings
+    };
+
+    saveCoursesToBackend(payload);
+  };
+
+  const getRoleBadgeViet = (r: string) => {
+    switch (r) {
+      case 'site-engineer': return 'Kỹ Sư Hiện Trường 👷';
+      case 'architect': return 'Kiến Trúc Sư 📐';
+      default: return 'Quản Lý Dự Án 💼';
+    }
+  };
+
+  // Filter student profiles
+  const filteredProfiles = profiles.filter(p => {
+    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesRole = roleFilter === "all" || p.role === roleFilter;
+    return matchesSearch && matchesRole;
+  });
+
+  // KPI summaries
+  const totalLearners = profiles.length;
+  const totalXp = profiles.reduce((sum, p) => sum + p.xp, 0);
+  const avgXp = totalLearners > 0 ? Math.round(totalXp / totalLearners) : 0;
+  const completedAllCount = profiles.filter(p => p.completedLessons.length >= 5).length;
+  const topLearner = profiles.length > 0 ? [...profiles].sort((a, b) => b.xp - a.xp)[0] : null;
+
+  return (
     <div className="min-h-screen bg-slate-900 text-slate-100 font-sans flex flex-col selection:bg-orange-600 selection:text-white pb-12">
       
       {/* 1. HEADER SECTION */}
@@ -907,7 +950,42 @@ Thành lập với khát khao định rõ chuẩn mực xây dựng mới, Bách
           <div className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 p-4 rounded-2xl font-bold text-xs flex items-center gap-2.5 animate-fadeIn shrink-0">
             <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>{successMsg}</span>
-          </div>          <button
+          </div>
+        )}
+        {error && (
+          <div className="bg-rose-500/15 border border-rose-500/30 text-rose-400 p-4 rounded-2xl font-bold text-xs flex items-center gap-2.5 animate-fadeIn shrink-0">
+            <X className="w-4 h-4 text-rose-400 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        {/* 3. TABS SELECTOR SYSTEM */}
+        <div id="admin-tabs" className="flex flex-wrap items-center bg-slate-950/60 border border-slate-800/80 rounded-2xl p-1.5 gap-1.5 select-none">
+          <button
+            onClick={() => setActiveTab("learners")}
+            className={`px-4 py-2.5 rounded-xl font-bold text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === "learners" 
+                ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20" 
+                : "text-slate-400 hover:text-slate-205 hover:bg-slate-900"
+            }`}
+          >
+            <Activity className="w-3.5 h-3.5" />
+            <span>Học Viên</span>
+          </button>
+          
+          <button
+            onClick={() => setActiveTab("lessons")}
+            className={`px-4 py-2.5 rounded-xl font-bold text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === "lessons" 
+                ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20" 
+                : "text-slate-400 hover:text-slate-205 hover:bg-slate-900"
+            }`}
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Câu Đố & Lộ Trình</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab("settings")}
             className={`px-4 py-2.5 rounded-xl font-bold text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap ${
               activeTab === "settings" 
@@ -941,42 +1019,6 @@ Thành lập với khát khao định rõ chuẩn mực xây dựng mới, Bách
           >
             <FileText className="w-3.5 h-3.5" />
             <span>Cầm Nang & Tài Liệu</span>
-          </button>
-        </div>��u</span>
-          </button>
-        </div>/div>tings")}
-            className={`px-6 py-4 font-black text-xs uppercase tracking-wider flex items-center gap-2.5 border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === "settings" 
-                ? "border-orange-500 text-orange-500 bg-slate-850/20" 
-                : "border-transparent text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <Settings className="w-4 h-4" />
-            <span>Thông Số Vận Hành (Cấu hình)</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("classifications")}
-            className={`px-6 py-4 font-black text-xs uppercase tracking-wider flex items-center gap-2.5 border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === "classifications" 
-                ? "border-orange-500 text-orange-500 bg-slate-850/20" 
-                : "border-transparent text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <Award className="w-4 h-4" />
-            <span>Chức Danh & Nghiệp Vụ</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("documents")}
-            className={`px-6 py-4 font-black text-xs uppercase tracking-wider flex items-center gap-2.5 border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === "documents" 
-                ? "border-orange-500 text-orange-500 bg-slate-850/20" 
-                : "border-transparent text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <FileText className="w-4 h-4" />
-            <span>Cẩm Nang & Tài Liệu</span>
           </button>
         </div>
 
